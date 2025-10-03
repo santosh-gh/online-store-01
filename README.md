@@ -113,7 +113,8 @@ The application has the following services:
         - Reproducible environments -> same setup runs on any machine.
         - Simplifies orchestration (without Kubernetes). 
 
-    7. Docker Networks: Helps Docker containers to communicate with each other, the host machine, and external systems.  
+    7. Docker Networks: Helps Docker containers to communicate with each other, 
+       the host machine, and external systems.  
         - Like a Local Area Network inside Docker.
         - Types: bridge (default), host, none, overlay, macvlan.  
 
@@ -154,7 +155,8 @@ The application has the following services:
 
       ENV -> sets environment variables.
 
-      ARG -> defines build-time variables (different from ENV because these don’t persist at runtime unless passed).
+      ARG -> defines build-time variables (different from ENV because these don’t persist 
+             at runtime unless passed).
 
       LABEL -> adds metadata to the image (author, version, description).
 
