@@ -70,8 +70,6 @@ The application has the following services:
   A custom bridge network where all services can communicate with each other 
   by service name (e.g., rabbitmq, order-service).
 
-
-
 # Install Docker Desktop
 
   Windows: https://docs.docker.com/desktop/setup/install/windows-install/
@@ -105,6 +103,9 @@ The application has the following services:
   This makes applications run the same way on any environment (developer laptop, testing server, or cloud).
 
   ## Docket Components 
+
+  ![Components](assets/Components.png)
+
     1. Docker Engine - runs and manages containers. It Contains
         - Docker Daemon: Runs in the background, manages images, containers, networks and volumes.
         - Docker Client/CLI: Tool to interact with the daemon.
@@ -138,6 +139,8 @@ The application has the following services:
         - Sharing data between multiple containers.
         - Better performance than storing data inside the container filesystem.
         - Backup & restore support.
+  
+  ![Cntainer](assets/Container.png)
 
   ## Docker files 
 
