@@ -285,134 +285,134 @@ The application has the following services:
 
 # Dockerize the Microservices
 
-  1. RabbitMQ: Message broker, provides the messaging backbone. Should run first.
-     Pull the image from Microsoft Repository
+    1. RabbitMQ: Message broker, provides the messaging backbone. Should run first.
+      Pull the image from Microsoft Repository
 
-  2. Create Order-service: Consumes/Produces messages via RabbitMQ.Connects to RabbitMQ for 
-     handling order messages.
-     Add Dockerfile
+    2. Create Order-service: Consumes/Produces messages via RabbitMQ.Connects to RabbitMQ for 
+      handling order messages.
+      Add Dockerfile
 
-  3. Product-service: Provides product-related APIs/data.
-     Add Dockerfile
+    3. Product-service: Provides product-related APIs/data.
+      Add Dockerfile
 
-  4. Store-front: frontend gateway that depends on both product and order services. 
-     This is the entry point for users. It calls product-service (for catalog) and 
-     order-service (for placing orders).
+    4. Store-front: frontend gateway that depends on both product and order services. 
+      This is the entry point for users. It calls product-service (for catalog) and 
+      order-service (for placing orders).
 
-     Add Dockerfile
+      Add Dockerfile
 
-  5. A custom bridge network where all services can communicate with each other 
-     by service name (e.g., rabbitmq, order-service).
+    5. A custom bridge network where all services can communicate with each other 
+      by service name (e.g., rabbitmq, order-service).
 
-  6. Add Plugin to RabbitMQ using volume
+    6. Add Plugin to RabbitMQ using volume
 
 
 # Run Microservices with Docker CLI
 
-  1. Build images
+    1. Build images
 
-      Order Service
-      docker build -t order-service src/order-service
+        Order Service
+        docker build -t order-service src/order-service
 
-      Product Service
-      docker build -t product-service src/product-service
+        Product Service
+        docker build -t product-service src/product-service
 
-      Store Front Service
-      docker build -t store-front src/store-front 
+        Store Front Service
+        docker build -t store-front src/store-front 
 
-      docker images       
+        docker images       
 
-  2. Create a custom network (talk to each other by container name)
+    2. Create a custom network (talk to each other by container name)
 
-      docker network create backend_services
+        docker network create backend_services
 
-  3. Run containers
+    3. Run containers
   
-    * RabbitMQ
+      * RabbitMQ
 
-    docker run -d \
-    --name rabbitmq \
-    --restart always \
-    --network backend_services \
-    -p 15672:15672 \
-    -p 5672:5672 \
-    -e RABBITMQ_DEFAULT_USER=username \
-    -e RABBITMQ_DEFAULT_PASS=password \
-    -v $(pwd)/rabbitmq_enabled_plugins:/etc/rabbitmq/enabled_plugins \
-    rabbitmq:3.13.2-management-alpine
+      docker run -d \
+      --name rabbitmq \
+      --restart always \
+      --network backend_services \
+      -p 15672:15672 \
+      -p 5672:5672 \
+      -e RABBITMQ_DEFAULT_USER=username \
+      -e RABBITMQ_DEFAULT_PASS=password \
+      -v $(pwd)/rabbitmq_enabled_plugins:/etc/rabbitmq/enabled_plugins \
+      rabbitmq:3.13.2-management-alpine
 
-    Note: 
-    rabbitmq_management - Web UI & REST API.
-    rabbitmq_prometheus - Metrics endpoint for Prometheus/Grafana.
-    rabbitmq_amqp1_0 - Extra protocol support (AMQP 1.0). 
+      Note: 
+      rabbitmq_management - Web UI & REST API.
+      rabbitmq_prometheus - Metrics endpoint for Prometheus/Grafana.
+      rabbitmq_amqp1_0 - Extra protocol support (AMQP 1.0). 
 
-    Health checks can’t be enforced automatically like Compose, but you can 
-    check manually with:
-    
-    docker exec rabbitmq rabbitmqctl status
+      Health checks can’t be enforced automatically like Compose, but you can 
+      check manually with:
+      
+      docker exec rabbitmq rabbitmqctl status
 
-    * Order Service
+      * Order Service
 
-    Since it depends on RabbitMQ, we can wait until RabbitMQ is healthy (or just sleep a few seconds).
+      Since it depends on RabbitMQ, we can wait until RabbitMQ is healthy (or just sleep a few seconds).
 
-    docker run -d \
-    --name order-service \
-    --restart always \
-    --network backend_services \
-    -p 3000:3000 \
-    -e ORDER_QUEUE_HOSTNAME=rabbitmq \
-    -e ORDER_QUEUE_PORT=5672 \
-    -e ORDER_QUEUE_USERNAME=username \
-    -e ORDER_QUEUE_PASSWORD=password \
-    -e ORDER_QUEUE_NAME=orders \
-    -e ORDER_QUEUE_RECONNECT_LIMIT=3 \
-    order-service      
+      docker run -d \
+      --name order-service \
+      --restart always \
+      --network backend_services \
+      -p 3000:3000 \
+      -e ORDER_QUEUE_HOSTNAME=rabbitmq \
+      -e ORDER_QUEUE_PORT=5672 \
+      -e ORDER_QUEUE_USERNAME=username \
+      -e ORDER_QUEUE_PASSWORD=password \
+      -e ORDER_QUEUE_NAME=orders \
+      -e ORDER_QUEUE_RECONNECT_LIMIT=3 \
+      order-service      
 
-    * Product Service
+      * Product Service
 
-    docker run -d \
-    --name product-service \
-    --restart always \
-    --network backend_services \
-    -p 3002:3002 \
-    product-service
-        
-    * Store Front        
-    docker run -d \
-    --name store-front \
-    --restart always \
-    --network backend_services \
-    -p 8080:8080 \
-    store-front
+      docker run -d \
+      --name product-service \
+      --restart always \
+      --network backend_services \
+      -p 3002:3002 \
+      product-service
+          
+      * Store Front        
+      docker run -d \
+      --name store-front \
+      --restart always \
+      --network backend_services \
+      -p 8080:8080 \
+      store-front
 
-    Depends on order-service and product-service, so wait a few seconds for them to start:
+      Depends on order-service and product-service, so wait a few seconds for them to start:
 
-    Note:    
+      Note:    
 
-    Health Checks: Docker Compose automatically waits for services to be healthy. 
-    With docker run, we need manual checks.
+      Health Checks: Docker Compose automatically waits for services to be healthy. 
+      With docker run, we need manual checks.
 
-    Depends_on: Not supported in docker run. You handle this by manually waiting 
-    or using a script to check health.
+      Depends_on: Not supported in docker run. You handle this by manually waiting 
+      or using a script to check health.
 
-    Volumes: Only RabbitMQ uses one volume. Others are just built images.
+      Volumes: Only RabbitMQ uses one volume. Others are just built images.
 
-    Network: All containers must use the same backend_services network to communicate 
-    by container name.
+      Network: All containers must use the same backend_services network to communicate 
+      by container name.
 
-    Inspect RabbitMQ plugins:
+      Inspect RabbitMQ plugins:
 
-    docker exec -it rabbitmq rabbitmq-plugins list
-    docker exec -it rabbitmq cat /etc/rabbitmq/enabled_plugins
+      docker exec -it rabbitmq rabbitmq-plugins list
+      docker exec -it rabbitmq cat /etc/rabbitmq/enabled_plugins
 
-    Use the Management UI
+      Use the Management UI
 
-    Open: http://localhost:15672
-    Login with the credentials set in docker-compose.yml (username / password).
+      Open: http://localhost:15672
+      Login with the credentials set in docker-compose.yml (username / password).
 
-  4. Access services
+    4. Access services
 
-    http://localhost:8080
+      http://localhost:8080
 
 
 # Run Microservices with Docker Compose
@@ -423,131 +423,131 @@ The application has the following services:
     Instead of starting each container manually with docker run, Compose declare all the services, 
     networks, and volumes in one file and bring them up with a single command.
 
-  1. Create Docker Compose file    
+    1. Create Docker Compose file    
 
-    * rabbitmq
+      * rabbitmq
 
-      Image: Uses rabbitmq:3.13.2-management-alpine (lightweight version with management UI).
+        Image: Uses rabbitmq:3.13.2-management-alpine (lightweight version with management UI).
 
-      Purpose: Acts as the message broker that other services use 
-      for communication (publish/subscribe to queues).
+        Purpose: Acts as the message broker that other services use 
+        for communication (publish/subscribe to queues).
 
-      Environment variables:
+        Environment variables:
 
-      RABBITMQ_DEFAULT_USER and RABBITMQ_DEFAULT_PASS -> set default login credentials.
+        RABBITMQ_DEFAULT_USER and RABBITMQ_DEFAULT_PASS -> set default login credentials.
 
-      Ports:
+        Ports:
 
-      15672 -> management UI (accessible in browser).
+        15672 -> management UI (accessible in browser).
 
-      5672 -> AMQP protocol for communication between services.
+        5672 -> AMQP protocol for communication between services.
 
-      Healthcheck: Runs rabbitmqctl status every 30s to verify RabbitMQ is healthy.
+        Healthcheck: Runs rabbitmqctl status every 30s to verify RabbitMQ is healthy.
 
-      Volumes: Mounts enabled_plugins configuration (so custom plugins can be enabled).                         
+        Volumes: Mounts enabled_plugins configuration (so custom plugins can be enabled).                         
 
-      Network: Connected to backend_services.
+        Network: Connected to backend_services.
 
-    * order-service
+      * order-service
 
-      Builds from: src/order-service (custom microservice).
+        Builds from: src/order-service (custom microservice).
 
-      Purpose: Handles orders (likely consuming messages from RabbitMQ).
+        Purpose: Handles orders (likely consuming messages from RabbitMQ).
 
-      Ports:
+        Ports:
 
-      3000:3000 -> service exposed on host port 3000.
+        3000:3000 -> service exposed on host port 3000.
 
-      Healthcheck: Hits http://order-service:3000/health to check liveness.
+        Healthcheck: Hits http://order-service:3000/health to check liveness.
 
-      Environment variables: Defines RabbitMQ connection details:
+        Environment variables: Defines RabbitMQ connection details:
 
-      Host (rabbitmq), port (5672), credentials, queue name (orders).
+        Host (rabbitmq), port (5672), credentials, queue name (orders).
 
-      ORDER_QUEUE_RECONNECT_LIMIT=3 -> retry limit for connecting to RabbitMQ.
+        ORDER_QUEUE_RECONNECT_LIMIT=3 -> retry limit for connecting to RabbitMQ.
 
-      Dependency:
+        Dependency:
 
-      depends_on.rabbitmq.condition: service_healthy -> order-service will 
-      only start after RabbitMQ is up and healthy.
+        depends_on.rabbitmq.condition: service_healthy -> order-service will 
+        only start after RabbitMQ is up and healthy.
 
-      Network: backend_services.
+        Network: backend_services.
 
-    * product-service
+      * product-service
 
-      Builds from: src/product-service.
+        Builds from: src/product-service.
 
-      Purpose: Handles product-related data (catalog, pricing, availability, etc.).
+        Purpose: Handles product-related data (catalog, pricing, availability, etc.).
 
-      Ports:
+        Ports:
 
-      3002:3002 -> exposed on host port 3002.
+        3002:3002 -> exposed on host port 3002.
 
-      Healthcheck: Hits http://product-service:3002/health.
+        Healthcheck: Hits http://product-service:3002/health.
 
-      Dependency: None explicitly, but it’s on the same network 
-      so other services (like store-front) can reach it.
+        Dependency: None explicitly, but it’s on the same network 
+        so other services (like store-front) can reach it.
 
-      Network: backend_services.
+        Network: backend_services.
 
-    * store-front
+      * store-front
 
-      Builds from: src/store-front.
+        Builds from: src/store-front.
 
-      Purpose: The UI / API gateway for customers (frontend of the system).
+        Purpose: The UI / API gateway for customers (frontend of the system).
 
-      Ports:
+        Ports:
 
-      8080:8080 -> exposed on host port 8080 (probably web UI).
+        8080:8080 -> exposed on host port 8080 (probably web UI).
 
-      Healthcheck: Hits http://store-front:80/health (⚠️ note: inside container 
-      it expects port 80, even though externally mapped to 8080).
+        Healthcheck: Hits http://store-front:80/health (⚠️ note: inside container 
+        it expects port 80, even though externally mapped to 8080).
 
-      Dependencies:
+        Dependencies:
 
-      Depends on product-service and order-service (ensures they start first).
+        Depends on product-service and order-service (ensures they start first).
 
-      Network: backend_services.
+        Network: backend_services.
 
-    * networks
+      * networks
 
-      backend_services: A custom bridge network where all services can communicate 
-      with each other by service name (e.g., rabbitmq, order-service).
+        backend_services: A custom bridge network where all services can communicate 
+        with each other by service name (e.g., rabbitmq, order-service).
 
-  2. Run Services 
+    2. Run Services 
 
-    docker compose up
-
-  3. Access Services
-
-  4. Docker Compose Commands
-
-    - Service life cycle
       docker compose up
-      docker compose down
-      docker compose start
-      docker compose stop
-      docker compose restart
-      docker compose pause
-      docker compose unpause
 
-    - Service & Container Management
-      docker compose ps
-      docker compose kill
+    3. Access Services
 
-    - Build & Images
-      docker compose build
-      docker compose pull
-      docker compose push
-      docker compose images
+    4. Docker Compose Commands
 
-    - Logs & Debugging
-      docker compose logs
-      docker compose top
-      docker compose config
+      - Service life cycle
+        docker compose up
+        docker compose down
+        docker compose start
+        docker compose stop
+        docker compose restart
+        docker compose pause
+        docker compose unpause
 
-    - Scale
-      docker compose up -d --scale <service>=<num>
+      - Service & Container Management
+        docker compose ps
+        docker compose kill
+
+      - Build & Images
+        docker compose build
+        docker compose pull
+        docker compose push
+        docker compose images
+
+      - Logs & Debugging
+        docker compose logs
+        docker compose top
+        docker compose config
+
+      - Scale
+        docker compose up -d --scale <service>=<num>
 
 
 # Run on Local Kubernetes (Minikube)
