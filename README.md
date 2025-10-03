@@ -54,22 +54,6 @@ The application has the following services:
 
     Easier Maintenance – Smaller codebases are easier to manage and test.
 
-# Dockerize the Appplicatin (Microservices)
-
-  RabbitMQ: Message broker, provides the messaging backbone. Should run first.
-
-  Order-service: Consumes/Produces messages via RabbitMQ.Connects to RabbitMQ for 
-  handling order messages.
-
-  Product-service: Provides product-related APIs/data.
-
-  Store-front: frontend gateway that depends on both product and order services. 
-  This is the entry point for users. It calls product-service (for catalog) and 
-  order-service (for placing orders).
-
-  A custom bridge network where all services can communicate with each other 
-  by service name (e.g., rabbitmq, order-service).
-
 # Install Docker Desktop
 
   Windows: https://docs.docker.com/desktop/setup/install/windows-install/
@@ -298,6 +282,30 @@ The application has the following services:
 
     # Remove everything unused
     docker system prune -a
+
+# Dockerize the Microservices
+
+  1. RabbitMQ: Message broker, provides the messaging backbone. Should run first.
+     Pull the image from Microsoft Repository
+
+  2. Create Order-service: Consumes/Produces messages via RabbitMQ.Connects to RabbitMQ for 
+     handling order messages.
+     Add Dockerfile
+
+  3. Product-service: Provides product-related APIs/data.
+     Add Dockerfile
+
+  4. Store-front: frontend gateway that depends on both product and order services. 
+     This is the entry point for users. It calls product-service (for catalog) and 
+     order-service (for placing orders).
+
+     Add Dockerfile
+
+  5. A custom bridge network where all services can communicate with each other 
+     by service name (e.g., rabbitmq, order-service).
+
+  6. Add Plugin to RabbitMQ using volume
+
 
 # Run Microservices with Docker CLI
 
