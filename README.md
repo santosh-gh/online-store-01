@@ -277,9 +277,9 @@ The application has the following services:
 
 # Install Docker Desktop
 
-  Windows: https://docs.docker.com/desktop/setup/install/windows-install/
-  Linux:   https://docs.docker.com/desktop/setup/install/linux/
-  Mac:     https://docs.docker.com/desktop/setup/install/mac-install/   
+    Windows: https://docs.docker.com/desktop/setup/install/windows-install/
+    Linux:   https://docs.docker.com/desktop/setup/install/linux/
+    Mac:     https://docs.docker.com/desktop/setup/install/mac-install/   
 
 # Dockerize the Microservices
 
@@ -419,6 +419,19 @@ The application has the following services:
   ## Access services
 
       http://localhost:8080
+
+  ## Scripts
+
+      ./run-store-service.sh
+  
+  ## Clean
+      
+      docker ps
+      docker stop <container-id>
+      docker rm <container-id>
+
+      docker images
+      docker rmi <image-id>
 
 
 # Run Microservices with Docker Compose
@@ -563,11 +576,11 @@ The application has the following services:
 
 # References
 
-  Docker Installation Steps in Windows & Mac OS
-  https://medium.com/@javatechie/docker-installation-steps-in-windows-mac-os-b749fdddf73a
+    Docker Installation Steps in Windows & Mac OS
+    https://medium.com/@javatechie/docker-installation-steps-in-windows-mac-os-b749fdddf73a
 
-  How to Install Docker on Windows
-  https://medium.com/@supportfly/how-to-install-docker-on-windows-bead8c658a68
+    How to Install Docker on Windows
+    https://medium.com/@supportfly/how-to-install-docker-on-windows-bead8c658a68
 
-  Step-by-Step Tutorial: Installing Docker and Docker Compose on Ubuntu
-  https://tomerklein.dev/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0
+    Step-by-Step Tutorial: Installing Docker and Docker Compose on Ubuntu
+    https://tomerklein.dev/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0
