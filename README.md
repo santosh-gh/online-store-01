@@ -30,7 +30,7 @@ The application has the following services:
   services that communicate with each other using lightweight protocols usually 
   HTTP/REST, gRPC, or messaging queues.
 
-  Each microservice:
+  ## Each microservice
 
     Runs in its own process.
 
@@ -40,7 +40,7 @@ The application has the following services:
 
     Focuses on a specific business capability (messaging, product, order processing).
 
-  Advantages of Microservices over Monolithic
+  ## Advantages of Microservices
 
     Scalability – Scale only the required service instead of the whole app.
 
@@ -53,23 +53,6 @@ The application has the following services:
     Reusability – Microservices can be reused across different projects.
 
     Easier Maintenance – Smaller codebases are easier to manage and test.
-
-# Install Docker Desktop
-
-  Windows: https://docs.docker.com/desktop/setup/install/windows-install/
-  Linux:   https://docs.docker.com/desktop/setup/install/linux/
-  Mac:     https://docs.docker.com/desktop/setup/install/mac-install/
-
-  More Links:
-
-  Docker Installation Steps in Windows & Mac OS
-  https://medium.com/@javatechie/docker-installation-steps-in-windows-mac-os-b749fdddf73a
-
-  How to Install Docker on Windows
-  https://medium.com/@supportfly/how-to-install-docker-on-windows-bead8c658a68
-
-  Step-by-Step Tutorial: Installing Docker and Docker Compose on Ubuntu
-  https://tomerklein.dev/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0
 
 # What is Docker?
 
@@ -90,48 +73,55 @@ The application has the following services:
 
   ![Components](assets/Components.png)
 
-    1. Docker Engine - runs and manages containers. It Contains
-        - Docker Daemon: Runs in the background, manages images, containers, networks and volumes.
-        - Docker Client/CLI: Tool to interact with the daemon.
-        - REST API: Lets apps talk to Docker programmatically.
+    # Docker Engine
+      - Runs and manages containers. It Contains
+      - Docker Daemon: Runs in the background, manages images, containers, networks and volumes.
+      - Docker Client/CLI: Tool to interact with the daemon.
+      - REST API: Lets apps talk to Docker programmatically.
 
-    2. Docker Images
-        - image is a file which contains dependencies, binaries and required 
-          configurations to run software inside a container.(static, read-only)
+    # Dockerfile
+      - A set of instructions (commands) used to build a Docker image.
+      - Each instruction adds a layer to the image.
 
-    3. Docker Containers
-        - A running instance of a Docker image (dynamic, running).
-        - Containers are isolated but can communicate via networking.
+    # Docker Images
+      - image is a file which contains dependencies, binaries and required 
+        configurations to run software inside a container.(static, read-only)
+      - Immutable (cannot be changed once built).
 
-    4. Dockerfile: A text file with instructions to build a Docker image.
+    # Docker Containers
+      - A running instance of a Docker image (dynamic, running).
+      - Containers are isolated but can communicate via networking.
 
-    5. Docker Hub (Registry): A repository where Docker images are stored.
+    # Docker Hub (Registry): 
+      - A repository where Docker images are stored.
 
-    6. Docker Compose: A tool to define and run multi-container applications.
-        - Uses a docker-compose.yml file. 
-        - Define app services in one file (docker-compose.yml).
-        - Reproducible environments -> same setup runs on any machine.
-        - Simplifies orchestration (without Kubernetes). 
+    # Docker Compose: A tool to define and run multi-container applications.
+      - Uses a docker-compose.yml file. 
+      - Define app services in one file (docker-compose.yml).
+      - Reproducible environments -> same setup runs on any machine.
+      - Simplifies orchestration (without Kubernetes). 
 
-    7. Docker Networks: Helps Docker containers to communicate with each other, 
-       the host machine, and external systems.  
-        - Like a Local Area Network inside Docker.
-        - Types: bridge (default), host, none, overlay, macvlan.  
+    # Docker Networks: 
+      - Helps Docker containers to communicate with each other, 
+        the host machine, and external systems.  
+      - Like a Local Area Network inside Docker.
+      - Types: bridge (default), host, none, overlay, macvlan.  
 
-    8. Docker Volume: A mechanism to persist data generated and used by Docker containers.  
-        - Store data outside the container, making it persistent and shareable across containers 
-        - Data persistence (data survives container restarts/deletion).
-        - Sharing data between multiple containers.
-        - Better performance than storing data inside the container filesystem.
-        - Backup & restore support.
+    # Docker Volume: 
+      - A mechanism to persist data generated and used by Docker containers.  
+      - Store data outside the container, making it persistent and shareable across containers 
+      - Data persistence (data survives container restarts/deletion).
+      - Sharing data between multiple containers.
+      - Better performance than storing data inside the container filesystem.
+      - Backup & restore support.
   
   ![Cntainer](assets/Container.png)
 
   ## Docker files 
 
-    Dockerfile: A text file that contains a set of instructions for building a Docker image.
+    A text file that contains a set of instructions for building a Docker image.
 
-    - Essential Instructions
+    # Essential Instructions
 
       FROM -> defines the base image.
 
@@ -143,7 +133,7 @@ The application has the following services:
 
       WORKDIR -> sets the working directory inside the container.
       
-    - File & Directory Management
+    # File & Directory Management
 
       COPY -> copies files from host into the image.
 
@@ -151,7 +141,7 @@ The application has the following services:
 
       VOLUME -> creates a mount point for persistent data or shared volumes.
 
-    - Configuration & Environment
+    # Configuration & Environment
 
       ENV -> sets environment variables.
 
@@ -164,11 +154,11 @@ The application has the following services:
 
       SHELL -> changes the default shell used in RUN commands (e.g., ["powershell", "-Command"] on Windows).
 
-    - Networking & Ports
+    # Networking & Ports
 
-      EXPOSE -> documents which ports the container will listen on (note: it doesn’t actually publish the port).
+      EXPOSE -> documents which ports the container will listen on.
 
-    - Build Optimizations
+    # Build Optimizations
 
       ONBUILD -> triggers instructions when the image is used as a base for another build.
 
@@ -176,7 +166,7 @@ The application has the following services:
 
       HEALTHCHECK -> defines a command for checking container health (e.g., ping a service).
 
-    - Security & Permissions
+    # Security & Permissions
 
       USER -> runs commands as a specific user/group.
 
@@ -285,275 +275,299 @@ The application has the following services:
     # Remove everything unused
     docker system prune -a
 
+# Install Docker Desktop
+
+  Windows: https://docs.docker.com/desktop/setup/install/windows-install/
+  Linux:   https://docs.docker.com/desktop/setup/install/linux/
+  Mac:     https://docs.docker.com/desktop/setup/install/mac-install/   
+
 # Dockerize the Microservices
 
-    1. RabbitMQ: Message broker, provides the messaging backbone. Should run first.
-      Pull the image from Microsoft Repository
+  ## RabbitMQ: 
+    Message broker, provides the messaging backbone. Should run first.
+    Pull the image from Microsoft Repository
 
-    2. Create Order-service: Consumes/Produces messages via RabbitMQ.Connects to RabbitMQ for 
-      handling order messages.
-      Add Dockerfile
+  ## Create Order-service
+    Consumes/Produces messages via RabbitMQ.
+    Connects to RabbitMQ for handling order messages.
+    Add a Dockerfile
 
-    3. Product-service: Provides product-related APIs/data.
-      Add Dockerfile
+  ## Product-service
+    Provides product-related APIs/data.
+    Add a Dockerfile
 
-    4. Store-front: frontend gateway that depends on both product and order services. 
-      This is the entry point for users. It calls product-service (for catalog) and 
-      order-service (for placing orders).
+  ## Store-front
+    Frontend gateway that depends on both product and order services. 
+    This is the entry point for users. It calls product-service (for catalog) and 
+    order-service (for placing orders).
 
-      Add Dockerfile
+    Add a Dockerfile
 
-    5. A custom bridge network where all services can communicate with each other 
-      by service name (e.g., rabbitmq, order-service).
+  ## Netwrk
+    A custom bridge network where all services can communicate with each other 
+    by service name (e.g., rabbitmq, order-service).
+    Create a Network
 
-    6. Add Plugin to RabbitMQ using volume
-
+  ## Volume
+    Add Plugin to RabbitMQ using volume
+    Create a volume for adding the Plugins 
 
 # Run Microservices with Docker CLI
 
-    1. Build images
+  ## Build images
 
-        Order Service
-        docker build -t order-service src/order-service
+    Order Service
+    docker build -t order-service src/order-service
 
-        Product Service
-        docker build -t product-service src/product-service
+    Product Service
+    docker build -t product-service src/product-service
 
-        Store Front Service
-        docker build -t store-front src/store-front 
+    Store Front Service
+    docker build -t store-front src/store-front 
 
-        docker images       
+    docker images       
 
-    2. Create a custom network (talk to each other by container name)
+  ## Create a network 
+    Talk to each other by container name
 
-        docker network create backend_services
+    docker network create backend_services
 
-    3. Run containers
+  ## Run containers
   
-      * RabbitMQ
+  ### RabbitMQ
 
-      docker run -d \
-      --name rabbitmq \
-      --restart always \
-      --network backend_services \
-      -p 15672:15672 \
-      -p 5672:5672 \
-      -e RABBITMQ_DEFAULT_USER=username \
-      -e RABBITMQ_DEFAULT_PASS=password \
-      -v $(pwd)/rabbitmq_enabled_plugins:/etc/rabbitmq/enabled_plugins \
-      rabbitmq:3.13.2-management-alpine
+    docker run -d \
+    --name rabbitmq \
+    --restart always \
+    --network backend_services \
+    -p 15672:15672 \
+    -p 5672:5672 \
+    -e RABBITMQ_DEFAULT_USER=username \
+    -e RABBITMQ_DEFAULT_PASS=password \
+    -v $(pwd)/rabbitmq_enabled_plugins:/etc/rabbitmq/enabled_plugins \
+    rabbitmq:3.13.2-management-alpine
 
-      Note: 
-      rabbitmq_management - Web UI & REST API.
-      rabbitmq_prometheus - Metrics endpoint for Prometheus/Grafana.
-      rabbitmq_amqp1_0 - Extra protocol support (AMQP 1.0). 
+    Note: 
+    rabbitmq_management - Web UI & REST API.
+    rabbitmq_prometheus - Metrics endpoint for Prometheus/Grafana.
+    rabbitmq_amqp1_0 - Extra protocol support (AMQP 1.0). 
 
-      Health checks can’t be enforced automatically like Compose, but you can 
-      check manually with:
-      
-      docker exec rabbitmq rabbitmqctl status
+    Health checks can’t be enforced automatically like Compose, but you can 
+    check manually with:
+    
+    docker exec rabbitmq rabbitmqctl status
 
-      * Order Service
+  ### Order Service
 
-      Since it depends on RabbitMQ, we can wait until RabbitMQ is healthy (or just sleep a few seconds).
+    Since it depends on RabbitMQ, we can wait until RabbitMQ is healthy (or just sleep a few seconds).
 
-      docker run -d \
-      --name order-service \
-      --restart always \
-      --network backend_services \
-      -p 3000:3000 \
-      -e ORDER_QUEUE_HOSTNAME=rabbitmq \
-      -e ORDER_QUEUE_PORT=5672 \
-      -e ORDER_QUEUE_USERNAME=username \
-      -e ORDER_QUEUE_PASSWORD=password \
-      -e ORDER_QUEUE_NAME=orders \
-      -e ORDER_QUEUE_RECONNECT_LIMIT=3 \
-      order-service      
+    docker run -d \
+    --name order-service \
+    --restart always \
+    --network backend_services \
+    -p 3000:3000 \
+    -e ORDER_QUEUE_HOSTNAME=rabbitmq \
+    -e ORDER_QUEUE_PORT=5672 \
+    -e ORDER_QUEUE_USERNAME=username \
+    -e ORDER_QUEUE_PASSWORD=password \
+    -e ORDER_QUEUE_NAME=orders \
+    -e ORDER_QUEUE_RECONNECT_LIMIT=3 \
+    order-service      
 
-      * Product Service
+  ### Product Service
 
-      docker run -d \
-      --name product-service \
-      --restart always \
-      --network backend_services \
-      -p 3002:3002 \
-      product-service
-          
-      * Store Front        
-      docker run -d \
-      --name store-front \
-      --restart always \
-      --network backend_services \
-      -p 8080:8080 \
-      store-front
+    docker run -d \
+    --name product-service \
+    --restart always \
+    --network backend_services \
+    -p 3002:3002 \
+    product-service
+        
+  ### Store Front        
+    docker run -d \
+    --name store-front \
+    --restart always \
+    --network backend_services \
+    -p 8080:8080 \
+    store-front
 
-      Depends on order-service and product-service, so wait a few seconds for them to start:
+    Depends on order-service and product-service, so wait a few seconds for them to start:
 
-      Note:    
+  ### Note:    
 
-      Health Checks: Docker Compose automatically waits for services to be healthy. 
-      With docker run, we need manual checks.
+    Health Checks: Docker Compose automatically waits for services to be healthy. 
+    With docker run, we need manual checks.
 
-      Depends_on: Not supported in docker run. You handle this by manually waiting 
-      or using a script to check health.
+    Depends_on: Not supported in docker run. You handle this by manually waiting 
+    or using a script to check health.
 
-      Volumes: Only RabbitMQ uses one volume. Others are just built images.
+    Volumes: Only RabbitMQ uses one volume. Others are just built images.
 
-      Network: All containers must use the same backend_services network to communicate 
-      by container name.
+    Network: All containers must use the same backend_services network to communicate 
+    by container name.
 
-      Inspect RabbitMQ plugins:
+  ### Inspect RabbitMQ plugins:
 
-      docker exec -it rabbitmq rabbitmq-plugins list
-      docker exec -it rabbitmq cat /etc/rabbitmq/enabled_plugins
+    docker exec -it rabbitmq rabbitmq-plugins list
+    docker exec -it rabbitmq cat /etc/rabbitmq/enabled_plugins
 
-      Use the Management UI
+    Use the Management UI
 
-      Open: http://localhost:15672
-      Login with the credentials set in docker-compose.yml (username / password).
+    Open: http://localhost:15672
+    Login with the credentials set in docker-compose.yml (username / password).
 
-    4. Access services
+  ## Access services
 
       http://localhost:8080
 
 
 # Run Microservices with Docker Compose
 
-    A tool that define and manage multi-container Docker applications using a single 
-    configuration file (usually docker-compose.yml).
+  A tool that define and manage multi-container Docker applications using a single 
+  configuration file (usually docker-compose.yml).
 
-    Instead of starting each container manually with docker run, Compose declare all the services, 
-    networks, and volumes in one file and bring them up with a single command.
+  Instead of starting each container manually with docker run, Compose declare all the services, 
+  networks, and volumes in one file and bring them up with a single command.
 
-    1. Create Docker Compose file    
+  ## Create Docker Compose file    
 
-      * rabbitmq
+  ### rabbitmq
 
-        Image: Uses rabbitmq:3.13.2-management-alpine (lightweight version with management UI).
+    Image: Uses rabbitmq:3.13.2-management-alpine (lightweight version with management UI).
 
-        Purpose: Acts as the message broker that other services use 
-        for communication (publish/subscribe to queues).
+    Purpose: Acts as the message broker that other services use 
+    for communication (publish/subscribe to queues).
 
-        Environment variables:
+    Environment variables:
 
-        RABBITMQ_DEFAULT_USER and RABBITMQ_DEFAULT_PASS -> set default login credentials.
+    RABBITMQ_DEFAULT_USER and RABBITMQ_DEFAULT_PASS -> set default login credentials.
 
-        Ports:
+    Ports:
 
-        15672 -> management UI (accessible in browser).
+    15672 -> management UI (accessible in browser).
 
-        5672 -> AMQP protocol for communication between services.
+    5672 -> AMQP protocol for communication between services.
 
-        Healthcheck: Runs rabbitmqctl status every 30s to verify RabbitMQ is healthy.
+    Healthcheck: Runs rabbitmqctl status every 30s to verify RabbitMQ is healthy.
 
-        Volumes: Mounts enabled_plugins configuration (so custom plugins can be enabled).                         
+    Volumes: Mounts enabled_plugins configuration (so custom plugins can be enabled).                         
 
-        Network: Connected to backend_services.
+    Network: Connected to backend_services.
 
-      * order-service
+  ### order-service
 
-        Builds from: src/order-service (custom microservice).
+    Builds from: src/order-service (custom microservice).
 
-        Purpose: Handles orders (likely consuming messages from RabbitMQ).
+    Purpose: Handles orders (likely consuming messages from RabbitMQ).
 
-        Ports:
+    Ports:
 
-        3000:3000 -> service exposed on host port 3000.
+    3000:3000 -> service exposed on host port 3000.
 
-        Healthcheck: Hits http://order-service:3000/health to check liveness.
+    Healthcheck: Hits http://order-service:3000/health to check liveness.
 
-        Environment variables: Defines RabbitMQ connection details:
+    Environment variables: Defines RabbitMQ connection details:
 
-        Host (rabbitmq), port (5672), credentials, queue name (orders).
+    Host (rabbitmq), port (5672), credentials, queue name (orders).
 
-        ORDER_QUEUE_RECONNECT_LIMIT=3 -> retry limit for connecting to RabbitMQ.
+    ORDER_QUEUE_RECONNECT_LIMIT=3 -> retry limit for connecting to RabbitMQ.
 
-        Dependency:
+    Dependency:
 
-        depends_on.rabbitmq.condition: service_healthy -> order-service will 
-        only start after RabbitMQ is up and healthy.
+    depends_on.rabbitmq.condition: service_healthy -> order-service will 
+    only start after RabbitMQ is up and healthy.
 
-        Network: backend_services.
+    Network: backend_services.
 
-      * product-service
+  ### product-service
 
-        Builds from: src/product-service.
+    Builds from: src/product-service.
 
-        Purpose: Handles product-related data (catalog, pricing, availability, etc.).
+    Purpose: Handles product-related data (catalog, pricing, availability, etc.).
 
-        Ports:
+    Ports:
 
-        3002:3002 -> exposed on host port 3002.
+    3002:3002 -> exposed on host port 3002.
 
-        Healthcheck: Hits http://product-service:3002/health.
+    Healthcheck: Hits http://product-service:3002/health.
 
-        Dependency: None explicitly, but it’s on the same network 
-        so other services (like store-front) can reach it.
+    Dependency: None explicitly, but it’s on the same network 
+    so other services (like store-front) can reach it.
 
-        Network: backend_services.
+    Network: backend_services.
 
-      * store-front
+  ### store-front
 
-        Builds from: src/store-front.
+    Builds from: src/store-front.
 
-        Purpose: The UI / API gateway for customers (frontend of the system).
+    Purpose: The UI / API gateway for customers (frontend of the system).
 
-        Ports:
+    Ports:
 
-        8080:8080 -> exposed on host port 8080 (probably web UI).
+    8080:8080 -> exposed on host port 8080 (probably web UI).
 
-        Healthcheck: Hits http://store-front:80/health (⚠️ note: inside container 
-        it expects port 80, even though externally mapped to 8080).
+    Healthcheck: Hits http://store-front:80/health (⚠️ note: inside container 
+    it expects port 80, even though externally mapped to 8080).
 
-        Dependencies:
+    Dependencies:
 
-        Depends on product-service and order-service (ensures they start first).
+    Depends on product-service and order-service (ensures they start first).
 
-        Network: backend_services.
+    Network: backend_services.
 
-      * networks
+  ### networks
 
-        backend_services: A custom bridge network where all services can communicate 
-        with each other by service name (e.g., rabbitmq, order-service).
+    backend_services: A custom bridge network where all services can communicate 
+    with each other by service name (e.g., rabbitmq, order-service).
 
-    2. Run Services 
+  ## Run Services 
 
       docker compose up
 
-    3. Access Services
+  ## Access Services
 
-    4. Docker Compose Commands
+  ## Docker Compose Commands
 
-      - Service life cycle
-        docker compose up
-        docker compose down
-        docker compose start
-        docker compose stop
-        docker compose restart
-        docker compose pause
-        docker compose unpause
+  ### Service life cycle
+    docker compose up
+    docker compose down
+    docker compose start
+    docker compose stop
+    docker compose restart
+    docker compose pause
+    docker compose unpause
 
-      - Service & Container Management
-        docker compose ps
-        docker compose kill
+  ### Service & Container Management
+    docker compose ps
+    docker compose kill
 
-      - Build & Images
-        docker compose build
-        docker compose pull
-        docker compose push
-        docker compose images
+  ### Build & Images
+    docker compose build
+    docker compose pull
+    docker compose push
+    docker compose images
 
-      - Logs & Debugging
-        docker compose logs
-        docker compose top
-        docker compose config
+  ### Logs & Debugging
+    docker compose logs
+    docker compose top
+    docker compose config
 
-      - Scale
-        docker compose up -d --scale <service>=<num>
-
+  ### Scale
+    docker compose up -d --scale <service>=<num>
 
 # Run on Local Kubernetes (Minikube)
 
 # Run on Local Kubernetes (KinD)
 
 # Run the app on Azure Kubernetes Service (AKS)
+
+# References
+
+  Docker Installation Steps in Windows & Mac OS
+  https://medium.com/@javatechie/docker-installation-steps-in-windows-mac-os-b749fdddf73a
+
+  How to Install Docker on Windows
+  https://medium.com/@supportfly/how-to-install-docker-on-windows-bead8c658a68
+
+  Step-by-Step Tutorial: Installing Docker and Docker Compose on Ubuntu
+  https://tomerklein.dev/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0
