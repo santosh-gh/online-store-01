@@ -127,6 +127,9 @@ The application has the following services:
   
   ![Cntainer](assets/Container.png)
 
+    #### Images = stack of read-only layers.
+    #### Containers = image layers + a writable top layer.
+
   ## Docker files 
 
     A text file that contains a set of instructions for building a Docker image.
