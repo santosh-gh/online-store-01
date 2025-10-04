@@ -9,7 +9,7 @@
   #### 8. Run Microservices using Docker Compose
 
   GitRepo: https://github.com/santosh-gh/online-store-01
-  
+
 
 > [!NOTE]
 > This example and source code is taken from Microsoft Documentations for FREE demo and learning purposes. 
@@ -319,7 +319,7 @@ The application has the following services:
 
     Add a Dockerfile
 
-  ## Netwrk
+  ## Network
     A custom bridge network where all services can communicate with each other 
     by service name (e.g., rabbitmq, order-service).
     Create a Network
