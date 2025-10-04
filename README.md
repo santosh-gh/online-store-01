@@ -1,3 +1,14 @@
+# Dockerize Microservices and run using Docker CLI and Docker Compose
+  ## Microservices
+  ## Docker Desktop
+  ## Dockerfile
+  ## Docker Image
+  ## Docker Container
+  ## Docker Commands
+  ## Docker Compose
+  ## Run Microservices using Docker CLI
+  ## Run Microservices using Docker Compose
+
 > [!NOTE]
 > This example and source code is taken from Microsoft Documentations for FREE demo and learning purposes. 
 
@@ -181,98 +192,98 @@ The application has the following services:
     # Get help
     docker --help
 
-    Images
-    # List images
+    # Images
+    List images
     docker images
 
-    # Pull an image
+    Pull an image
     docker pull <image_name>:<tag>
 
-    # Remove an image
+    Remove an image
     docker rmi <image_id>
 
-    # Build an image from Dockerfile
+    Build an image from Dockerfile
     docker build -t <image_name>:<tag> .
 
-    # Tag an image
+    Tag an image
     docker tag <image_id> <new_name>:<tag>
 
-    Containers
-    # List running containers
+    # Containers
+    List running containers
     docker ps
 
-    # List all containers (including stopped)
+    List all containers (including stopped)
     docker ps -a
 
-    # Run a container
+    Run a container
     docker run -d --name <container_name> <image_name>
 
-    # Run interactively with shell
+    Run interactively with shell
     docker run -it <image_name> /bin/bash
 
-    # Start/Stop container
+    Start/Stop container
     docker start <container_id>
     docker stop <container_id>
 
-    # Restart container
+    Restart container
     docker restart <container_id>
 
-    # Remove container
+    Remove container
     docker rm <container_id>
 
-    # Logs
+    Logs
     docker logs -f <container_id>
 
-    # Execute command in running container
+    Execute command in running container
     docker exec -it <container_id> /bin/bash
 
-    Volumes & Data
-    # List volumes
+    # Volumes & Data
+    List volumes
     docker volume ls
 
-    # Create volume
+    Create volume
     docker volume create <volume_name>
 
-    # Mount volume
+    Mount volume
     docker run -v <volume_name>:/path/in/container <image_name>
 
-    Networking
-    # List networks
+    # Networking
+    List networks
     docker network ls
 
-    # Create network
+    Create network
     docker network create <network_name>
 
-    # Connect container to network
+    Connect container to network
     docker network connect <network_name> <container_id>
 
-    # Disconnect container from network
+    Disconnect container from network
     docker network disconnect <network_name> <container_id>
 
-    Docker Compose
-    # Start services
+    # Docker Compose
+    Start services
     docker-compose up -d
 
-    # Stop services
+    Stop services
     docker-compose down
 
-    # Restart services
+    Restart services
     docker-compose restart
 
-    # View logs
+    View logs
     docker-compose logs -f
 
-    Cleanup
-    # Remove stopped containers
+    # Cleanup
+    Remove stopped containers
     docker container prune
 
-    # Remove unused images
+    Remove unused images
     docker image prune
 
-    # Remove unused volumes
+    Remove unused volumes
     docker volume prune
 
-    # Remove everything unused
+    Remove everything unused
     docker system prune -a
 
 # Install Docker Desktop
@@ -424,7 +435,7 @@ The application has the following services:
 
       ./run-store-service.sh
   
-  ## Clean
+  ## Cleanup
       
       docker ps
       docker stop <container-id>
