@@ -1,12 +1,12 @@
 # Dockerize Microservices and run using Docker CLI and Docker Compose
-  #### Docker Desktop
-  #### Dockerfile
-  #### Docker Image
-  #### Docker Container
-  #### Docker Commands
-  #### Docker Compose
-  #### Run Microservices using Docker CLI
-  #### Run Microservices using Docker Compose
+  #### 1. Docker Desktop
+  #### 2. Dockerfile
+  #### 3. Docker Image
+  #### 4. Docker Container
+  #### 5. Docker Commands
+  #### 6. Docker Compose
+  #### 7. Run Microservices using Docker CLI
+  #### 8. Run Microservices using Docker Compose
 
 > [!NOTE]
 > This example and source code is taken from Microsoft Documentations for FREE demo and learning purposes. 
