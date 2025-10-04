@@ -127,8 +127,8 @@ The application has the following services:
   
   ![Cntainer](assets/Container.png)
 
-    #### Images = stack of read-only layers.
-    #### Containers = image layers + a writable top layer.
+    - Images = stack of read-only layers.
+    - Containers = image layers + a writable top layer.
 
   ## Docker files 
 
