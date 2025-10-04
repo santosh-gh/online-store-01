@@ -8,6 +8,9 @@
   #### 7. Run Microservices using Docker CLI
   #### 8. Run Microservices using Docker Compose
 
+  GitRepo: https://github.com/santosh-gh/online-store-01
+  
+
 > [!NOTE]
 > This example and source code is taken from Microsoft Documentations for FREE demo and learning purposes. 
 
@@ -575,7 +578,7 @@ The application has the following services:
 
   ### Logs & Debugging
     docker compose logs
-    docker compose top
+    docker compose top       
     docker compose config
 
   ### Scale
