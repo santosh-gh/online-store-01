@@ -587,12 +587,6 @@ The application has the following services:
   ### Scale
     docker compose up -d --scale <service>=<num>
 
-# Run on Local Kubernetes (Minikube)
-
-# Run on Local Kubernetes (KinD)
-
-# Run the app on Azure Kubernetes Service (AKS)
-
 # References
 
     Docker Installation Steps in Windows & Mac OS
